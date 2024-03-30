@@ -39,3 +39,16 @@ yarn-error.*
 
 expo-env.d.ts
 # @end expo-cli
+
+# Android
+android/build/
+android/app/build/
+android/gradle/wrapper/gradle-wrapper.jar
+android/gradle/caches/
+android/local.properties
+
+# iOS
+ios/build/
+ios/Pods/
+ios/Podfile.lock
+ios/Pods.xcodeproj/
