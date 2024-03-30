@@ -16,6 +16,12 @@ type Props = {};
 
 const login = (props: Props) => {
   const colorScheme = useColorScheme();
+  const isDarkMode = colorScheme == "dark";
+
+  const titleImageUrl = !isDarkMode
+    ? require("../assets/images/titlelogo_dark.png")
+    : require("../assets/images/titlelogo_light.png");
+
   return (
     <View>
       <Image
@@ -23,7 +29,7 @@ const login = (props: Props) => {
         style={{
           width: "100%",
           height: 290,
-          backgroundColor: "rgb(242, 242, 242)",
+          backgroundColor: Colors[colorScheme ?? "light"].background,
         }}
       />
 
@@ -31,7 +37,7 @@ const login = (props: Props) => {
         style={{
           padding: 20,
           height: "100%",
-          backgroundColor: "rgb(242, 242, 242)",
+          backgroundColor: Colors[colorScheme ?? "light"].background,
           display: "flex",
           gap: 50,
           alignContent: "space-around",
@@ -43,7 +49,7 @@ const login = (props: Props) => {
               fontSize: 25,
               fontWeight: "bold",
               marginVertical: 0,
-              color: "#B2255D",
+              color: Colors[colorScheme ?? "light"].text,
             }}
           >
             Login
@@ -53,7 +59,7 @@ const login = (props: Props) => {
               fontSize: 19,
               fontWeight: "normal",
               marginVertical: 0,
-              color: "#B2255D",
+              color: Colors[colorScheme ?? "light"].text,
               opacity: 0.4,
             }}
           >
@@ -63,7 +69,6 @@ const login = (props: Props) => {
 
         <View
           style={{
-            // marginTop: 50,
             backgroundColor: "unset",
             display: "flex",
             gap: 15,
@@ -73,36 +78,41 @@ const login = (props: Props) => {
             style={{
               width: "100%",
               height: 50,
-              backgroundColor: "rgba(178, 37, 93, 0.3)",
+              backgroundColor: Colors[colorScheme ?? "light"].lightText,
               borderRadius: 10,
               padding: 10,
-              color: "#fff",
+              color: Colors[colorScheme ?? "light"].text,
             }}
+            placeholderTextColor={Colors[colorScheme ?? "light"].lightText}
+            placeholder="Email"
           />
-          <View>
+          <View
+            style={{
+              backgroundColor: "unset",
+            }}
+          >
             <TextInput
               style={{
                 width: "100%",
                 height: 50,
-                backgroundColor: "rgba(178, 37, 93, 0.3)",
+                backgroundColor: Colors[colorScheme ?? "light"].lightText,
                 borderRadius: 10,
                 padding: 10,
-                color: "#fff",
+                color: Colors[colorScheme ?? "light"].text,
               }}
+              placeholderTextColor={Colors[colorScheme ?? "light"].lightText}
+              placeholder="Password"
+              secureTextEntry={true}
             />
             <Link href="/modal" asChild>
               <Pressable>
                 {({ pressed }) => (
                   <Text
                     style={{
-                      color: "rgba(178, 37, 93, 0.3)",
-                      backgroundColor: `${
-                        Colors[colorScheme ?? "light"].background
-                      }`,
-                      // padding: 10,
-                      // borderRadius: 10,
+                      color: Colors[colorScheme ?? "light"].text,
+                      backgroundColor:
+                        Colors[colorScheme ?? "light"].background,
                       textAlign: "right",
-                      // marginTop: 20,
                       opacity: pressed ? 0.5 : 1,
                     }}
                   >
@@ -112,12 +122,12 @@ const login = (props: Props) => {
               </Pressable>
             </Link>
           </View>
-          <Link href="/(tabs)" asChild>
+          <Link href="./(tabs)/" asChild>
             <Pressable>
               {({ pressed }) => (
                 <Text
                   style={{
-                    color: "#fff",
+                    color: Colors[colorScheme ?? "light"].background,
                     backgroundColor: "#B2255D",
                     padding: 10,
                     borderRadius: 10,
@@ -132,16 +142,18 @@ const login = (props: Props) => {
             </Pressable>
           </Link>
         </View>
-        <Image
-          source={require("../assets/images/titlelogo.png")}
-          style={{
-            width: "90%",
-            alignSelf: "center",
-            marginTop: 50,
-            height: 50,
-            backgroundColor: "rgb(242, 242, 242)",
-          }}
-        />
+        {titleImageUrl && (
+          <Image
+            source={titleImageUrl}
+            style={{
+              width: "90%",
+              alignSelf: "center",
+              marginTop: 50,
+              height: 50,
+              backgroundColor: Colors[colorScheme ?? "light"].background,
+            }}
+          />
+        )}
       </View>
     </View>
   );

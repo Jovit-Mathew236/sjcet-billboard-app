@@ -31,7 +31,9 @@ export default function TabLayout() {
         name="index"
         options={{
           title: "Edit",
-          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
+          tabBarIcon: ({ color }) => (
+            <TabBarIcon name="pencil-square" color={color} />
+          ),
           // headerRight: () => (
           //   <Link href="/modal" asChild>
           //     <Pressable>
@@ -52,7 +54,7 @@ export default function TabLayout() {
         name="two"
         options={{
           title: "Preview",
-          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
+          tabBarIcon: ({ color }) => <TabBarIcon name="eye" color={color} />,
         }}
       />
     </Tabs>
