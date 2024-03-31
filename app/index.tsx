@@ -1,8 +1,11 @@
 import { View, Text } from "@/components/Themed";
 import { Link } from "expo-router";
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Colors from "@/constants/Colors";
 import { useColorScheme } from "@/components/useColorScheme";
+import auth from "@react-native-firebase/auth";
+import { useNavigation, ParamListBase } from "@react-navigation/native";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import {
   Alert,
   Button,
@@ -14,16 +17,44 @@ import {
 
 type Props = {};
 
-const login = (props: Props) => {
+const Login = (props: Props) => {
+  const navigation = useNavigation<NativeStackNavigationProp<ParamListBase>>();
   const colorScheme = useColorScheme();
   const isDarkMode = colorScheme == "dark";
 
-  const titleImageUrl = !isDarkMode
-    ? require("../assets/images/titlelogo_dark.png")
-    : require("../assets/images/titlelogo_light.png");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [user, setUser] = useState<any>(null);
+
+  useEffect(() => {
+    const unsubscribe = auth().onAuthStateChanged((user) => {
+      setUser(user); // Update user state when authentication state changes
+    });
+
+    return unsubscribe; // Cleanup function to unsubscribe from the listener
+  }, []);
+
+  const handleLogin = async () => {
+    try {
+      const response = await auth().signInWithEmailAndPassword(email, password);
+      // console.log("User logged in successfully:", response.user);
+      setUser(response.user); // Set the user in the state
+      // Navigate to the dashboard or home screen upon successful login
+      // Replace '/dashboard' with the appropriate route name
+      navigation.navigate("(tabs)");
+    } catch (error: any) {
+      console.error("Error logging in:", error.message);
+      // Show an alert or error message to the user
+      Alert.alert("Error", error.message);
+    }
+  };
 
   return (
-    <View>
+    <View
+      style={{
+        height: "100%",
+      }}
+    >
       <Image
         source={require("../assets/images/login.png")}
         style={{
@@ -85,6 +116,8 @@ const login = (props: Props) => {
             }}
             placeholderTextColor={Colors[colorScheme ?? "light"].lightText}
             placeholder="Email"
+            value={email}
+            onChangeText={setEmail}
           />
           <View
             style={{
@@ -103,6 +136,8 @@ const login = (props: Props) => {
               placeholderTextColor={Colors[colorScheme ?? "light"].lightText}
               placeholder="Password"
               secureTextEntry={true}
+              value={password}
+              onChangeText={setPassword}
             />
             <Link href="/modal" asChild>
               <Pressable>
@@ -122,41 +157,41 @@ const login = (props: Props) => {
               </Pressable>
             </Link>
           </View>
-          <Link href="./(tabs)/" asChild>
-            <Pressable>
-              {({ pressed }) => (
-                <Text
-                  style={{
-                    color: Colors[colorScheme ?? "light"].background,
-                    backgroundColor: "#B2255D",
-                    padding: 10,
-                    borderRadius: 10,
-                    textAlign: "center",
-                    marginTop: 20,
-                    opacity: pressed ? 0.5 : 1,
-                  }}
-                >
-                  Login
-                </Text>
-              )}
-            </Pressable>
-          </Link>
+          <Pressable
+            onPress={handleLogin}
+            style={({ pressed }) => [
+              {
+                opacity: pressed ? 0.5 : 1,
+                backgroundColor: "#B2255D",
+                borderRadius: 10,
+                padding: 10,
+                marginTop: 20,
+              },
+            ]}
+          >
+            <Text
+              style={{
+                color: Colors[colorScheme ?? "light"].background,
+                textAlign: "center",
+              }}
+            >
+              Login
+            </Text>
+          </Pressable>
         </View>
-        {titleImageUrl && (
-          <Image
-            source={titleImageUrl}
-            style={{
-              width: "90%",
-              alignSelf: "center",
-              marginTop: 50,
-              height: 50,
-              backgroundColor: Colors[colorScheme ?? "light"].background,
-            }}
-          />
-        )}
+        <Image
+          source={require("../assets/images/titlelogo_dark.png")}
+          style={{
+            width: "90%",
+            alignSelf: "center",
+            marginTop: 50,
+            height: 50,
+            backgroundColor: Colors[colorScheme ?? "light"].background,
+          }}
+        />
       </View>
     </View>
   );
 };
 
-export default login;
+export default Login;
