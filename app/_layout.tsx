@@ -59,6 +59,8 @@ function RootLayoutNav() {
     >
       <Stack {...unstable_settings}>
         <Stack.Screen name="index" options={{ headerShown: false }} />
+        <Stack.Screen name="login" options={{ headerShown: false }} />
+        <Stack.Screen name="form" options={{ presentation: "formSheet" }} />
         <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
         <Stack.Screen name="modal" options={{ presentation: "modal" }} />
       </Stack>

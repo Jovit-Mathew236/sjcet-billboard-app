@@ -22,6 +22,10 @@ const Login = (props: Props) => {
   const colorScheme = useColorScheme();
   const isDarkMode = colorScheme == "dark";
 
+  const titleImageUrl = isDarkMode
+    ? require("../assets/images/titlelogo_dark.png")
+    : require("../assets/images/titlelogo_light.png");
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [user, setUser] = useState<any>(null);
@@ -52,144 +56,89 @@ const Login = (props: Props) => {
   return (
     <View
       style={{
+        display: "flex",
+        flexDirection: "column",
         height: "100%",
+        paddingLeft: 20,
+        paddingRight: 20,
+        width: "100%",
       }}
     >
-      <Image
-        source={require("../assets/images/login.png")}
-        style={{
-          width: "100%",
-          height: 290,
-          backgroundColor: Colors[colorScheme ?? "light"].background,
-        }}
-      />
-
       <View
         style={{
-          padding: 20,
-          height: "100%",
-          backgroundColor: Colors[colorScheme ?? "light"].background,
+          position: "relative",
           display: "flex",
-          gap: 50,
-          alignContent: "space-around",
+          justifyContent: "center",
+          alignItems: "center",
+          width: "100%",
         }}
       >
-        <View>
-          <Text
-            style={{
-              fontSize: 25,
-              fontWeight: "bold",
-              marginVertical: 0,
-              color: Colors[colorScheme ?? "light"].text,
-            }}
-          >
-            Login
-          </Text>
-          <Text
-            style={{
-              fontSize: 19,
-              fontWeight: "normal",
-              marginVertical: 0,
-              color: Colors[colorScheme ?? "light"].text,
-              opacity: 0.4,
-            }}
-          >
-            Login to continue using the app{" "}
-          </Text>
-        </View>
-
+        <Image
+          source={require("../assets/images/home.png")}
+          style={{
+            alignSelf: "center",
+            width: "100%",
+            // marginTop: 50,
+            height: "85%",
+            resizeMode: "contain",
+            backgroundColor: Colors[colorScheme ?? "light"].background,
+            borderRadius: 20,
+          }}
+        />
         <View
           style={{
-            backgroundColor: "unset",
+            position: "absolute",
+            width: "100%",
             display: "flex",
-            gap: 15,
+            justifyContent: "center",
+            alignItems: "center",
+            height: 90,
           }}
         >
-          <TextInput
+          <Image
+            source={titleImageUrl}
             style={{
+              alignSelf: "center",
               width: "100%",
-              height: 50,
-              backgroundColor: Colors[colorScheme ?? "light"].lightText,
-              borderRadius: 10,
-              padding: 10,
-              color: Colors[colorScheme ?? "light"].text,
+              height: 40,
+              // marginTop: 50,
+              alignContent: "flex-end",
+              resizeMode: "contain",
+              backgroundColor: Colors[colorScheme ?? "light"].background,
             }}
-            placeholderTextColor={Colors[colorScheme ?? "light"].lightText}
-            placeholder="Email"
-            value={email}
-            onChangeText={setEmail}
           />
-          <View
-            style={{
-              backgroundColor: "unset",
-            }}
-          >
-            <TextInput
-              style={{
-                width: "100%",
-                height: 50,
-                backgroundColor: Colors[colorScheme ?? "light"].lightText,
-                borderRadius: 10,
-                padding: 10,
-                color: Colors[colorScheme ?? "light"].text,
-              }}
-              placeholderTextColor={Colors[colorScheme ?? "light"].lightText}
-              placeholder="Password"
-              secureTextEntry={true}
-              value={password}
-              onChangeText={setPassword}
-            />
-            <Link href="/modal" asChild>
-              <Pressable>
-                {({ pressed }) => (
-                  <Text
-                    style={{
-                      color: Colors[colorScheme ?? "light"].text,
-                      backgroundColor:
-                        Colors[colorScheme ?? "light"].background,
-                      textAlign: "right",
-                      opacity: pressed ? 0.5 : 1,
-                    }}
-                  >
-                    Forget Password?
-                  </Text>
-                )}
-              </Pressable>
-            </Link>
-          </View>
-          <Pressable
-            onPress={handleLogin}
-            style={({ pressed }) => [
-              {
-                opacity: pressed ? 0.5 : 1,
-                backgroundColor: "#B2255D",
-                borderRadius: 10,
-                padding: 10,
-                marginTop: 20,
-              },
-            ]}
-          >
+        </View>
+      </View>
+      <Text
+        style={{
+          textAlign: "center",
+          fontSize: 22,
+          color: Colors[colorScheme ?? "light"].text,
+          marginTop: -20,
+        }}
+      >
+        Start your journey now
+      </Text>
+      <Link href="/login" asChild>
+        <Pressable>
+          {({ pressed }) => (
             <Text
               style={{
                 color: Colors[colorScheme ?? "light"].background,
+                backgroundColor: Colors[colorScheme ?? "light"].text,
+                padding: 15,
+                marginTop: 20,
+                fontSize: 18,
+                borderRadius: 15,
                 textAlign: "center",
+                opacity: pressed ? 0.5 : 1,
               }}
             >
-              Login
+              Sign in
             </Text>
-          </Pressable>
-        </View>
-        <Image
-          source={require("../assets/images/titlelogo_dark.png")}
-          style={{
-            width: "90%",
-            alignSelf: "center",
-            marginTop: 50,
-            height: 50,
-            backgroundColor: Colors[colorScheme ?? "light"].background,
-          }}
-        />
-      </View>
+          )}
+        </Pressable>
+      </Link>
     </View>
   );
 };

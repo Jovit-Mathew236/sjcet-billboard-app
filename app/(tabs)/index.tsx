@@ -1,35 +1,96 @@
-import { StyleSheet } from "react-native";
+import { Pressable, StyleSheet } from "react-native";
 
 import EditScreenInfo from "@/components/EditScreenInfo";
 import { Text, View } from "@/components/Themed";
+import { Link } from "expo-router";
+import Colors from "@/constants/Colors";
+import { useColorScheme } from "@/components/useColorScheme";
 
 export default function TabOneScreen() {
+  const colorScheme = useColorScheme();
+
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Edit section</Text>
-      {/* <View
-        style={styles.separator}
-        lightColor="#eee"
-        darkColor="rgba(255,255,255,0.1)"
-      /> */}
-      {/* <EditScreenInfo path="app/(tabs)/index.tsx" /> */}
+    <View
+      style={{
+        display: "flex",
+        flexDirection: "row",
+        justifyContent: "space-around",
+        alignItems: "center",
+        backgroundColor: Colors[colorScheme ?? "light"].background,
+        width: "100%",
+      }}
+    >
+      <Link
+        href="/form"
+        asChild
+        style={{
+          width: "40%",
+        }}
+      >
+        <Pressable>
+          {({ pressed }) => (
+            <View
+              style={{
+                opacity: pressed ? 0.5 : 1,
+                backgroundColor: Colors[colorScheme ?? "light"].text,
+                borderRadius: 10,
+                padding: 10,
+                marginTop: 20,
+                height: 200,
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <Text
+                style={{
+                  color: Colors[colorScheme ?? "light"].background,
+                  textAlign: "center",
+                  fontSize: 18,
+                }}
+              >
+                Faculty edit
+              </Text>
+            </View>
+          )}
+        </Pressable>
+      </Link>
+
+      <Link
+        href="/form"
+        asChild
+        style={{
+          width: "40%",
+        }}
+      >
+        <Pressable>
+          {({ pressed }) => (
+            <View
+              style={{
+                opacity: pressed ? 0.5 : 1,
+                backgroundColor: Colors[colorScheme ?? "light"].text,
+                borderRadius: 10,
+                padding: 10,
+                marginTop: 20,
+                height: 200,
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <Text
+                style={{
+                  color: Colors[colorScheme ?? "light"].background,
+                  textAlign: "center",
+                  fontSize: 18,
+                }}
+              >
+                Extra edit
+              </Text>
+            </View>
+          )}
+        </Pressable>
+      </Link>
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  title: {
-    fontSize: 20,
-    fontWeight: "bold",
-  },
-  separator: {
-    marginVertical: 30,
-    height: 1,
-    width: "80%",
-  },
-});

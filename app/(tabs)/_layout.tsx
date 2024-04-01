@@ -65,10 +65,21 @@ const TabLayout: React.FC = () => {
   return (
     <Tabs
       screenOptions={{
-        tabBarActiveTintColor: Colors[colorScheme ?? "light"].tint,
+        tabBarActiveTintColor: Colors[colorScheme ?? "light"].text,
         // Disable the static render of the header on web
         // to prevent a hydration error in React Navigation v6.
         headerShown: true, // Assuming you want to hide the header
+        tabBarStyle: {
+          margin: 20,
+          position: "absolute",
+          borderRadius: 20,
+          marginBottom: 20,
+          height: 60,
+          padding: 10,
+        },
+        tabBarLabelStyle: {
+          paddingBottom: 10,
+        },
       }}
     >
       <Tabs.Screen
