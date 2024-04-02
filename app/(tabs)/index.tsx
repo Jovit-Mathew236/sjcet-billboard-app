@@ -85,7 +85,7 @@ export default function TabOneScreen() {
                   fontSize: 18,
                 }}
               >
-                Extra edit
+                Position edit
               </Text>
             </View>
           )}
